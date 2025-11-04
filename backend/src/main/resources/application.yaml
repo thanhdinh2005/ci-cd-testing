@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: Flogin Backend
+
+  datasource:
+    url: jdbc:h2:mem:test
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+application:
+  security:
+    jwt:
+      secret-key: 'a3f5c9d2e7b48f1a9c6d3e4f5a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4'
+      expiration: 86400000
