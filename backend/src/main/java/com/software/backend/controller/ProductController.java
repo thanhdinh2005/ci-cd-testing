@@ -31,4 +31,15 @@ public class ProductController {
     public ResponseEntity<ApiResponse<ProductResponse>> createProduct(@Valid @RequestBody ProductRequest request){
         return ResponseEntity.ok(ApiResponse.success(productService.createProduct(request)));
     }
+
+    @PutMapping("{id}")
+    public ResponseEntity<ApiResponse<ProductResponse>> updateProduct(@Valid @RequestBody ProductRequest request, @PathVariable Long id){
+        return ResponseEntity.ok(ApiResponse.success(productService.updateProductById(id, request)));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<ApiResponse<String>> deleteProduct(@PathVariable Long id){
+        productService.deleteProduct(id);
+        return ResponseEntity.ok(ApiResponse.success("Delete successfully"));
+    }
 }
