@@ -1,6 +1,8 @@
 package com.software.backend.service;
 
 import com.software.backend.dto.request.ProductRequest;
+import com.software.backend.dto.request.ProductSearchRequest;
+import com.software.backend.dto.response.PageResponse;
 import com.software.backend.dto.response.ProductResponse;
 
 import java.util.List;
@@ -11,5 +13,5 @@ public interface ProductService {
     ProductResponse createProduct(ProductRequest request);
     ProductResponse updateProductById(Long id, ProductRequest request);
     void deleteProduct(Long id);
+    PageResponse<ProductResponse> searchProduct(ProductSearchRequest request, int page, int size);
 }
-
