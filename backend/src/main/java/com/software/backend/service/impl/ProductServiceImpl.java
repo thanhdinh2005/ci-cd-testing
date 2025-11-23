@@ -4,6 +4,7 @@ import com.software.backend.dto.request.ProductRequest;
 import com.software.backend.dto.response.ProductResponse;
 import com.software.backend.entity.Category;
 import com.software.backend.entity.Product;
+import com.software.backend.exception.BadRequestException;
 import com.software.backend.exception.ResourceNotFoundException;
 import com.software.backend.mapper.ProductMapper;
 import com.software.backend.repository.CategoryRepository;
@@ -36,9 +37,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse createProduct(ProductRequest request) {
+
+        if (productRepository.existsByNameIgnoreCase(request.getName())) {
+    throw new BadRequestException("Product name already exists");
+}
         Product product = productMapper.toEntity(request);
         Category category = categoryRepository.findByName(request.getCategoryName())
-                .orElseThrow(() -> new ResourceNotFoundException("Category not found with name: "+ request.getCategoryName()));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with name"));
         product.setCategory(category);
         return productMapper.toResponse(productRepository.save(product));
     }
@@ -47,7 +52,9 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse updateProductById(Long id, ProductRequest request) {
         Product currentProduct = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
-
+        if (productRepository.existsByNameIgnoreCase(request.getName())) {
+    throw new BadRequestException("Product name already exists");
+}
         Product newProduct = productMapper.toEntity(request);
         Category category = categoryRepository.findByName(request.getCategoryName())
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found with name: "+ request.getCategoryName()));

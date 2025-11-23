@@ -21,4 +21,6 @@ public class CategoryController {
     public ResponseEntity<ApiResponse<List<Category>>> getAllCategories(){
         return ResponseEntity.ok(ApiResponse.success(categoryService.getAllCategories()));
     }
+
+    
 }
